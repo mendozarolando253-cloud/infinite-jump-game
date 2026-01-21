@@ -399,5 +399,68 @@
             });
         }
     </script>
+    <script>
+// SOLUCIÓN PARA PWA INSTALADA CON ERROR 404
+(function() {
+  // Detectar si estamos en modo PWA instalada
+  const isInStandaloneMode = () =>
+    (window.matchMedia('(display-mode: standalone)').matches) ||
+    (window.navigator.standalone) ||
+    document.referrer.includes('android-app://');
+  
+  // Detectar si estamos en la ruta incorrecta
+  const shouldRedirect = () => {
+    const currentPath = window.location.pathname;
+    const correctPath = '/infinite-jump-game/';
+    
+    // Si NO estamos en la ruta correcta
+    if (currentPath !== correctPath && 
+        currentPath !== correctPath + 'index.html' &&
+        !currentPath.includes('infinite-jump-game')) {
+      return true;
+    }
+    return false;
+  };
+  
+  // Redirigir si es necesario
+  if (isInStandaloneMode() && shouldRedirect()) {
+    console.log('PWA detectada en ruta incorrecta, redirigiendo...');
+    window.location.href = '/infinite-jump-game/index.html';
+  }
+  
+  // Verificar que todos los recursos carguen
+  window.addEventListener('load', function() {
+    console.log('Página cargada en modo:', 
+                isInStandaloneMode() ? 'PWA instalada' : 'Navegador web');
+    
+    // Forzar recarga de recursos si fallan
+    const checkResources = setInterval(() => {
+      if (!window.game) {
+        console.log('Game no cargado, intentando recargar recursos...');
+        
+        // Recargar CSS
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+          const href = link.href;
+          link.href = '';
+          link.href = href;
+        });
+        
+        // Recargar JS
+        const scripts = document.querySelectorAll('script[src]');
+        scripts.forEach(script => {
+          if (script.src.includes('game.js')) {
+            const newScript = document.createElement('script');
+            newScript.src = script.src;
+            document.body.appendChild(newScript);
+          }
+        });
+      } else {
+        clearInterval(checkResources);
+      }
+    }, 1000);
+  });
+})();
+</script>
 </body>
 </html>
