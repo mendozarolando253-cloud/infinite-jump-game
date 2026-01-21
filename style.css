@@ -1,0 +1,894 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Exo 2', sans-serif;
+    background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 100%);
+    color: #fff;
+    min-height: 100vh;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Estilos para las pantallas */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    overflow-y: auto;
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Pantalla de inicio */
+.logo-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.game-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #00ffff, #0080ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.neon-line {
+    width: 200px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #00ffff, transparent);
+    margin: 0 auto 15px;
+    border-radius: 2px;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: #a0a0ff;
+    letter-spacing: 1px;
+}
+
+.stats-preview {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: rgba(20, 20, 60, 0.7);
+    border: 2px solid #00ffff;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    min-width: 100px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card i {
+    font-size: 1.8rem;
+    color: #00ffff;
+    margin-bottom: 8px;
+}
+
+.stat-card span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+    color: #fff;
+}
+
+.stat-card p {
+    color: #a0a0ff;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 350px;
+    margin: 25px auto;
+    width: 100%;
+}
+
+/* Estilos de botones */
+.btn-primary, .btn-secondary, .btn-tertiary, .btn-icon, .btn-buy, .btn-install {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #00aaff, #0080ff);
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 170, 255, 0.6);
+}
+
+.neon-button {
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff;
+    }
+    to {
+        box-shadow: 0 0 15px #00aaff, 0 0 30px #00aaff, 0 0 45px #00aaff;
+    }
+}
+
+.btn-secondary {
+    background: rgba(20, 20, 60, 0.8);
+    color: #a0a0ff;
+    border: 2px solid #00aaff;
+}
+
+.btn-secondary:hover {
+    background: rgba(30, 30, 80, 0.9);
+    transform: translateY(-3px);
+}
+
+.btn-tertiary {
+    background: transparent;
+    color: #a0a0ff;
+    border: 2px solid #4444aa;
+}
+
+.btn-tertiary:hover {
+    border-color: #00aaff;
+    color: #00ffff;
+}
+
+.btn-icon {
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(20, 20, 60, 0.8);
+    color: #00ffff;
+    border: 2px solid #00aaff;
+}
+
+.btn-buy {
+    background: linear-gradient(90deg, #ff3366, #ff0066);
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.8rem;
+}
+
+.btn-buy:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+}
+
+.btn-buy.disabled {
+    background: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.btn-install {
+    background: linear-gradient(90deg, #00cc88, #00aa66);
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.pwa-install {
+    max-width: 350px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.replit-info {
+    text-align: center;
+    margin-top: 15px;
+    color: #8888ff;
+    font-size: 0.9rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Pantalla de juego */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(10, 10, 40, 0.8);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #00aaff;
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
+}
+
+.game-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.stat i {
+    color: #00ffff;
+    font-size: 1.3rem;
+}
+
+.game-area {
+    flex: 1;
+    position: relative;
+    background: rgba(5, 5, 25, 0.7);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid #00aaff;
+    box-shadow: 0 0 30px rgba(0, 170, 255, 0.4) inset;
+}
+
+#game-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.mobile-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 25px;
+    display: none;
+}
+
+.control-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 170, 255, 0.3);
+    border: 3px solid #00ffff;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.control-button:active {
+    background: rgba(0, 170, 255, 0.6);
+    transform: scale(0.95);
+}
+
+.controls-center {
+    display: flex;
+    align-items: center;
+}
+
+.diamond-indicator {
+    background: rgba(255, 51, 102, 0.2);
+    border: 2px solid #ff3366;
+    border-radius: 15px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.game-powerups {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.powerup-indicator {
+    background: rgba(0, 170, 255, 0.2);
+    border: 2px solid #00aaff;
+    border-radius: 8px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #00ffff;
+    font-size: 0.9rem;
+}
+
+/* Pantalla de pausa */
+.pause-container {
+    background: rgba(10, 10, 40, 0.95);
+    border: 3px solid #00aaff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 450px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+.pause-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    color: #00ffff;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px #00ffff;
+}
+
+.pause-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+.pause-stat p {
+    color: #a0a0ff;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.pause-stat h3 {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.pause-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+/* Pantalla de tienda */
+.shop-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #00aaff;
+}
+
+.shop-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-bottom: 12px;
+    font-size: 1.7rem;
+}
+
+.shop-balance {
+    font-size: 1.3rem;
+    color: #ffcc00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.shop-items {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.shop-item {
+    background: rgba(20, 20, 60, 0.7);
+    border: 2px solid #00aaff;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.3s;
+}
+
+.shop-item:hover {
+    transform: translateX(5px);
+    border-color: #00ffff;
+}
+
+.item-icon {
+    font-size: 2rem;
+    color: #00ffff;
+    min-width: 50px;
+    text-align: center;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h3 {
+    color: #fff;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.item-description {
+    color: #a0a0ff;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
+.item-price {
+    color: #ffcc00;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.item-status {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 15px;
+    display: inline-block;
+    background: rgba(255, 51, 102, 0.2);
+    color: #ff3366;
+    border: 1px solid #ff3366;
+}
+
+.shop-footer {
+    padding-top: 15px;
+    border-top: 2px solid #00aaff;
+}
+
+/* Pantalla de canje */
+.redeem-container {
+    background: rgba(10, 10, 40, 0.95);
+    border: 3px solid #00aaff;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 500px;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.redeem-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.redeem-header h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    margin-bottom: 15px;
+    font-size: 1.7rem;
+}
+
+.redeem-requirements {
+    background: rgba(20, 20, 60, 0.7);
+    border-radius: 12px;
+    padding: 15px;
+    color: #ffcc00;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.redeem-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #00cc66);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.5s;
+}
+
+.redeem-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redeem-locked, .redeem-unlocked {
+    text-align: center;
+    width: 100%;
+}
+
+.redeem-locked i {
+    font-size: 4rem;
+    color: #ff3366;
+    margin-bottom: 15px;
+}
+
+.redeem-locked h3 {
+    color: #ff3366;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+}
+
+.redeem-locked p {
+    color: #a0a0ff;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.redeem-success {
+    margin-bottom: 25px;
+}
+
+.redeem-success i {
+    font-size: 4rem;
+    color: #00ff88;
+    margin-bottom: 15px;
+}
+
+.redeem-success h3 {
+    color: #00ff88;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+}
+
+.redeem-success p {
+    color: #a0a0ff;
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #00ffff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(20, 20, 60, 0.8);
+    border: 2px solid #00aaff;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.form-notice {
+    background: rgba(0, 170, 255, 0.1);
+    border: 2px solid #00aaff;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a0a0ff;
+    font-size: 0.85rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
+.redeem-footer {
+    padding-top: 15px;
+    border-top: 2px solid #00aaff;
+}
+
+/* Pantalla de tutorial */
+.tutorial-container {
+    background: rgba(10, 10, 40, 0.95);
+    border: 3px solid #00aaff;
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 600px;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorial-container h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.7rem;
+}
+
+.tutorial-steps {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.tutorial-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: rgba(20, 20, 60, 0.5);
+    border-radius: 12px;
+    padding: 15px;
+    border-left: 4px solid #00ffff;
+}
+
+.step-number {
+    min-width: 35px;
+    height: 35px;
+    background: #00ffff;
+    color: #0a0a2a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1rem;
+}
+
+.step-content h3 {
+    color: #fff;
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+}
+
+.step-content p {
+    color: #a0a0ff;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.step-content i {
+    color: #ff3366;
+    margin: 0 4px;
+}
+
+/* Pantalla de game over */
+.gameover-container {
+    background: rgba(10, 10, 40, 0.95);
+    border: 3px solid #00aaff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+.gameover-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: #ff3366;
+    margin-bottom: 25px;
+    text-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+}
+
+.gameover-stats {
+    margin: 30px 0;
+}
+
+.gameover-stat {
+    margin-bottom: 20px;
+}
+
+.gameover-stat p {
+    color: #a0a0ff;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.gameover-stat h2 {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.gameover-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2.2rem;
+    }
+
+    .stats-preview {
+        gap: 12px;
+    }
+
+    .stat-card {
+        min-width: 90px;
+        padding: 12px;
+    }
+
+    .stat-card span {
+        font-size: 1.5rem;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .game-stats {
+        gap: 12px;
+    }
+
+    .stat {
+        font-size: 0.9rem;
+    }
+
+    .pause-stats, .gameover-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .shop-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.8rem;
+    }
+
+    .screen {
+        padding: 15px;
+    }
+
+    .control-button {
+        width: 55px;
+        height: 55px;
+    }
+
+    .btn-primary, .btn-secondary, .btn-tertiary {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .game-stats {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(20, 20, 60, 0.5);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00aaff, #0080ff);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #00ffff, #00aaff);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}

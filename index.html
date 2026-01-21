@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Jump - Juego PWA</title>
+    <meta name="description" content="Juego Infinite Jump estilo plataformas con sistema de economía">
+    <meta name="theme-color" content="#0a0a2a">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕹️</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Pantalla de inicio -->
+        <div id="start-screen" class="screen active">
+            <div class="logo-container">
+                <h1 class="game-title">INFINITE JUMP</h1>
+                <div class="neon-line"></div>
+                <p class="tagline">Salta más alto que nunca</p>
+            </div>
+
+            <div class="stats-preview">
+                <div class="stat-card">
+                    <i class="fas fa-coins"></i>
+                    <span id="preview-coins">0</span>
+                    <p>Monedas</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-trophy"></i>
+                    <span id="preview-level">1</span>
+                    <p>Nivel</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="preview-highscore">0</span>
+                    <p>Record (m)</p>
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <button id="start-game" class="btn-primary neon-button">
+                    <i class="fas fa-play"></i> COMENZAR JUEGO
+                </button>
+                <button id="open-shop" class="btn-secondary">
+                    <i class="fas fa-store"></i> TIENDA
+                </button>
+                <button id="open-redeem" class="btn-secondary">
+                    <i class="fas fa-gift"></i> CANJEAR
+                </button>
+                <button id="how-to-play" class="btn-tertiary">
+                    <i class="fas fa-question-circle"></i> CÓMO JUGAR
+                </button>
+            </div>
+
+            <div class="pwa-install" id="install-container" style="display: none;">
+                <button id="install-button" class="btn-install">
+                    <i class="fas fa-download"></i> INSTALAR APP
+                </button>
+            </div>
+
+            <div class="replit-info">
+                <p>🔄 Presiona el botón de recarga en la vista previa para ver cambios</p>
+            </div>
+        </div>
+
+        <!-- Pantalla de juego -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="game-stats">
+                    <div class="stat">
+                        <i class="fas fa-arrow-up"></i>
+                        <span id="score">0</span> m
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-coins"></i>
+                        <span id="coins">0</span>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-trophy"></i>
+                        Nivel <span id="level">1</span>
+                    </div>
+                </div>
+                <button id="pause-game" class="btn-icon">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+
+            <div class="game-area">
+                <canvas id="game-canvas"></canvas>
+                <div class="mobile-controls">
+                    <button id="left-control" class="control-button">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="controls-center">
+                        <div class="diamond-indicator">
+                            <i class="fas fa-gem" style="color: #ff3366;"></i>
+                            <span id="diamond-count">0</span>
+                        </div>
+                    </div>
+                    <button id="right-control" class="control-button">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="game-powerups">
+                <div class="powerup-indicator" id="boots-indicator" style="display: none;">
+                    <i class="fas fa-walking"></i> Botas Activas
+                </div>
+                <div class="powerup-indicator" id="jetpack-indicator" style="display: none;">
+                    <i class="fas fa-rocket"></i> Jetpack Activo
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de pausa -->
+        <div id="pause-screen" class="screen">
+            <div class="pause-container">
+                <h2 class="pause-title">JUEGO PAUSADO</h2>
+                <div class="pause-stats">
+                    <div class="pause-stat">
+                        <p>Altura actual</p>
+                        <h3 id="pause-score">0 m</h3>
+                    </div>
+                    <div class="pause-stat">
+                        <p>Monedas ganadas</p>
+                        <h3 id="pause-coins">0</h3>
+                    </div>
+                </div>
+                <div class="pause-buttons">
+                    <button id="resume-game" class="btn-primary">
+                        <i class="fas fa-play"></i> CONTINUAR
+                    </button>
+                    <button id="restart-game" class="btn-secondary">
+                        <i class="fas fa-redo"></i> REINICIAR
+                    </button>
+                    <button id="quit-game" class="btn-tertiary">
+                        <i class="fas fa-home"></i> MENÚ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de tienda -->
+        <div id="shop-screen" class="screen">
+            <div class="shop-header">
+                <h2><i class="fas fa-store"></i> TIENDA DE MEJORAS</h2>
+                <div class="shop-balance">
+                    <i class="fas fa-coins"></i>
+                    <span id="shop-coins">0</span> monedas
+                </div>
+            </div>
+
+            <div class="shop-items">
+                <div class="shop-item" data-item="boots">
+                    <div class="item-icon">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="item-details">
+                        <h3>Botas de Salto</h3>
+                        <p class="item-description">Aumenta la fuerza de salto en un 30%</p>
+                        <div class="item-price">
+                            <i class="fas fa-coins"></i> <span>100</span> monedas
+                        </div>
+                        <div class="item-status" id="boots-status">NO COMPRADO</div>
+                    </div>
+                    <button class="btn-buy" data-item="boots">
+                        COMPRAR
+                    </button>
+                </div>
+
+                <div class="shop-item" data-item="jetpack">
+                    <div class="item-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="item-details">
+                        <h3>Auto-Jetpack</h3>
+                        <p class="item-description">Salto automático cada 3 plataformas</p>
+                        <div class="item-price">
+                            <i class="fas fa-coins"></i> <span>250</span> monedas
+                        </div>
+                        <div class="item-status" id="jetpack-status">NO COMPRADO</div>
+                    </div>
+                    <button class="btn-buy" data-item="jetpack">
+                        COMPRAR
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-footer">
+                <button id="close-shop" class="btn-primary">
+                    <i class="fas fa-arrow-left"></i> VOLVER AL MENÚ
+                </button>
+            </div>
+        </div>
+
+        <!-- Pantalla de canje -->
+        <div id="redeem-screen" class="screen">
+            <div class="redeem-container">
+                <div class="redeem-header">
+                    <h2><i class="fas fa-gift"></i> CANJEAR PREMIO</h2>
+                    <div class="redeem-requirements">
+                        <i class="fas fa-coins"></i>
+                        Necesitas 1000 monedas
+                        <div class="redeem-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="redeem-progress"></div>
+                            </div>
+                            <span id="redeem-count">0/1000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="redeem-content" id="redeem-content">
+                    <div class="redeem-locked" id="redeem-locked">
+                        <i class="fas fa-lock"></i>
+                        <h3>CANJEO BLOQUEADO</h3>
+                        <p>Necesitas 1000 monedas para desbloquear el canjeo de premios.</p>
+                        <p>Sigue jugando y acumula más monedas para canjear.</p>
+                    </div>
+
+                    <div class="redeem-unlocked" id="redeem-unlocked" style="display: none;">
+                        <div class="redeem-success">
+                            <i class="fas fa-unlock"></i>
+                            <h3>¡CANJEO DISPONIBLE!</h3>
+                            <p>Tienes suficientes monedas para canjear un premio.</p>
+                        </div>
+
+                        <form id="redeem-form">
+                            <div class="form-group">
+                                <label for="player-id">
+                                    <i class="fas fa-id-card"></i> ID del Jugador
+                                </label>
+                                <input type="text" id="player-id" placeholder="Ej: JUGADOR123" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="game-name">
+                                    <i class="fas fa-gamepad"></i> Nombre del Juego
+                                </label>
+                                <input type="text" id="game-name" value="Infinite Jump" readonly>
+                            </div>
+
+                            <div class="form-notice">
+                                <i class="fas fa-info-circle"></i>
+                                Al confirmar, se abrirá WhatsApp con los detalles de tu canje.
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" id="cancel-redeem" class="btn-secondary">
+                                    CANCELAR
+                                </button>
+                                <button type="submit" class="btn-primary">
+                                    <i class="fab fa-whatsapp"></i> CONFIRMAR CANJEO
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="redeem-footer">
+                    <button id="close-redeem" class="btn-tertiary">
+                        <i class="fas fa-arrow-left"></i> VOLVER
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla de cómo jugar -->
+        <div id="tutorial-screen" class="screen">
+            <div class="tutorial-container">
+                <h2><i class="fas fa-gamepad"></i> CÓMO JUGAR</h2>
+
+                <div class="tutorial-steps">
+                    <div class="tutorial-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>CONTROLES</h3>
+                            <p>Usa las flechas ← → del teclado o toca los lados de la pantalla en móvil para mover al personaje.</p>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>SALTO AUTOMÁTICO</h3>
+                            <p>El personaje salta automáticamente al tocar una plataforma. ¡Mantenlo vivo el mayor tiempo posible!</p>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>RECOLECTA RECOMPENSAS</h3>
+                            <p>Gana 2 monedas por cada 100 metros subidos. Toca los <i class="fas fa-gem" style="color: #ff3366;"></i> diamantes rojos para ganar 5 monedas extra.</p>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>MEJORA TU PERSONAJE</h3>
+                            <p>Visita la tienda para comprar mejoras que te ayudarán a subir más alto.</p>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>CANJEA TUS MONEDAS</h3>
+                            <p>Cuando tengas 1000 monedas, podrás canjearlas por premios reales a través de WhatsApp.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="close-tutorial" class="btn-primary">
+                    <i class="fas fa-check"></i> ENTENDIDO
+                </button>
+            </div>
+        </div>
+
+        <!-- Pantalla de game over -->
+        <div id="gameover-screen" class="screen">
+            <div class="gameover-container">
+                <h1 class="gameover-title">¡GAME OVER!</h1>
+                <div class="gameover-stats">
+                    <div class="gameover-stat">
+                        <p>ALTURA ALCANZADA</p>
+                        <h2 id="final-score">0 m</h2>
+                    </div>
+                    <div class="gameover-stat">
+                        <p>MONEDAS GANADAS</p>
+                        <h2 id="final-coins">0</h2>
+                    </div>
+                    <div class="gameover-stat">
+                        <p>NUEVO RECORD</p>
+                        <h2 id="new-record" style="color: #00ff00; display: none;">¡NUEVO RECORD!</h2>
+                        <h2 id="no-record" style="display: none;">SIN RECORD</h2>
+                    </div>
+                </div>
+
+                <div class="gameover-buttons">
+                    <button id="play-again" class="btn-primary">
+                        <i class="fas fa-redo"></i> JUGAR DE NUEVO
+                    </button>
+                    <button id="gameover-menu" class="btn-secondary">
+                        <i class="fas fa-home"></i> MENÚ PRINCIPAL
+                    </button>
+                    <button id="gameover-shop" class="btn-tertiary">
+                        <i class="fas fa-store"></i> IR A LA TIENDA
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script>
+        // Detectar si estamos en Replit
+        console.log("Infinite Jump - Juego PWA cargado en Replit");
+
+        // Detectar si la app se puede instalar (para PWA)
+        let deferredPrompt;
+        const installContainer = document.getElementById('install-container');
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installContainer.style.display = 'block';
+
+            installButton.addEventListener('click', () => {
+                installContainer.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Usuario aceptó instalar la PWA');
+                    } else {
+                        console.log('Usuario rechazó instalar la PWA');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+
+        // Registrar Service Worker si está disponible
+        if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker no registrado:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
