@@ -1,46 +1,18 @@
 {
   "name": "Infinite Jump",
   "short_name": "InfiniteJump",
-  "description": "Juego Infinite Jump - Salta plataformas, gana monedas y canjea premios",
-  "start_url": "/",
+  "description": "Juego Infinite Jump PWA",
+  "start_url": "/infinite-jump-game/",
+  "scope": "/infinite-jump-game/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0a2a",
   "theme_color": "#0a0a2a",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik05NiAxODRDMTQ0LjYxNCAxODQgMTg0IDE0NC42MTQgMTg0IDk2QzE4NCA0Ny4zODU4IDE0NC42MTQgOCA5NiA4QzQ3LjM4NTggOCA4IDQ3LjM4NTggOCA5NkM4IDE0NC42MTQgNDcuMzg1OCAxODQgOTYgMTg0WiIgZmlsbD0iIzAwRkZGRiIvPgo8cGF0aCBkPSJNNzQgNzZIMTE4VjEyMEg3NFY3NloiIGZpbGw9IiMwMEEwRkYiLz4KPHBhdGggZD0iTTEwMiA2MlYxMzRIMTIyVjgySDE0MlY2MkgxMDJaIiBmaWxsPSIjMDBBMEZGIi8+Cjwvc3ZnPgo=",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "categories": ["games", "entertainment"],
-  "lang": "es",
-  "dir": "ltr",
-  "prefer_related_applications": false,
-  "scope": "/",
-  "shortcuts": [
-    {
-      "name": "Jugar ahora",
-      "short_name": "Jugar",
-      "description": "Comenzar nueva partida",
-      "url": "/?play",
-      "icons": [{ "src": "/icon-play.png", "sizes": "96x96" }]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/screenshot1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
+      "type": "image/svg+xml"
     }
   ]
 }
