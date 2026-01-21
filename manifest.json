@@ -2,7 +2,7 @@
   "name": "Infinite Jump",
   "short_name": "InfiniteJump",
   "description": "Juego Infinite Jump PWA",
-  "start_url": "/infinite-jump-game/",
+  "start_url": "/infinite-jump-game/index.html",
   "scope": "/infinite-jump-game/",
   "display": "standalone",
   "orientation": "portrait",
@@ -10,9 +10,9 @@
   "theme_color": "#0a0a2a",
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik05NiAxODRDMTQ0LjYxNCAxODQgMTg0IDE0NC42MTQgMTg0IDk2QzE4NCA0Ny4zODU4IDE0NC42MTQgOCA5NiA4QzQ3LjM4NTggOCA4IDQ3LjM4NTggOCA5NkM4IDE0NC42MTQgNDcuMzg1OCAxODQgOTYgMTg0WiIgZmlsbD0iIzAwRkZGRiIvPgo8cGF0aCBkPSJNNzQgNzZIMTE4VjEyMEg3NFY3NloiIGZpbGw9IiMwMEEwRkYiLz4KPHBhdGggZD0iTTEwMiA2MlYxMzRIMTIyVjgySDE0MlY2MkgxMDJaIiBmaWxsPSIjMDBBMEZGIi8+Cjwvc3ZnPgo=",
+      "src": "/infinite-jump-game/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ]
 }
